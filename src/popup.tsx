@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import "./../style.css"
 
+
 function IndexPopup() {
   const [data, setData] = useState("")
   const [count, setCount] = useState(0);

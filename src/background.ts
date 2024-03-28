@@ -1,4 +1,6 @@
 let safe = false
+// let sufferUrl = 'chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html'
+let sufferUrl = chrome.runtime.getURL("tabs/suffer.html")
 
 function initializeVariables(callback) {
   chrome.storage.local.get(["lastDate", "isSafe"], function (result) {
@@ -38,13 +40,14 @@ initializeVariables(function() {
     // console.log(changeInfo);
     // console.log(tab.url);
     // console.log(safe);
-    if (changeInfo.status === "loading" && safe === false && tab.url !== "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html") {
-      chrome.tabs.query({ url: "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" }, function (sufferTabs) {
+
+    if (changeInfo.status === "loading" && safe === false && tab.url !== sufferUrl) {
+      chrome.tabs.query({ url: sufferUrl }, function (sufferTabs) {
         if (sufferTabs.length > 0) {
           chrome.tabs.update(sufferTabs[0].id, { active: true });
         } else {
           // If "suffer" tab is not open, create a new one
-          chrome.tabs.create({ url: "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" });
+          chrome.tabs.create({ url: sufferUrl });
         }
       });
     }
@@ -53,20 +56,20 @@ initializeVariables(function() {
 
 
 
-  function changeScreen(tab){
-    chrome.tabs.get(tab.tabId, function(tab) {
-      if (tab.url !== "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html") {
-          chrome.tabs.query({ url: "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" }, function (sufferTabs) {
-            if (sufferTabs.length > 0) {
-              chrome.tabs.update(sufferTabs[0].id, { active: true });
-            } else {
-              // If "suffer" tab is not open, create a new one
-              chrome.tabs.create({ url: "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" });
-            }
-          });
-      }
-    });
-  }
+  // function changeScreen(tab){
+  //   chrome.tabs.get(tab.tabId, function(tab) {
+  //     if (tab.url !== sufferUrl) {
+  //         chrome.tabs.query({ url: sufferUrl }, function (sufferTabs) {
+  //           if (sufferTabs.length > 0) {
+  //             chrome.tabs.update(sufferTabs[0].id, { active: true });
+  //           } else {
+  //             // If "suffer" tab is not open, create a new one
+  //             chrome.tabs.create({ url: sufferUrl });
+  //           }
+  //         });
+  //     }
+  //   });
+  // }
 
 
 
@@ -78,17 +81,17 @@ initializeVariables(function() {
 
       let repeat;
       repeat = setInterval(function(){
-        chrome.tabs.get(activeInfo.tabId, function(tab) {
-          if (tab.url !== "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" && !safe) {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          if (tabs[0].url !== sufferUrl && !safe) {
               setTimeout(() => {
                 console.log('entered intervals')
-                if (safe || tab.url === "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html") clearInterval(repeat)
-                chrome.tabs.query({ url: "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" }, function (sufferTabs) {
+                if (safe || tabs[0].url === sufferUrl) clearInterval(repeat)
+                chrome.tabs.query({ url: sufferUrl }, function (sufferTabs) {
                   if (sufferTabs.length > 0) {
                     chrome.tabs.update(sufferTabs[0].id, { active: true });
                   } else {
                     // If "suffer" tab is not open, create a new one
-                    chrome.tabs.create({ url: "chrome-extension://dncfabafoamgjghbapdkdmlehbaclldk/tabs/suffer.html" });
+                    chrome.tabs.create({ url: sufferUrl });
                   }
                 });
               }, 100)
