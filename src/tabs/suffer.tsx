@@ -7,17 +7,17 @@ import Timer from "./../components/Timer";
 import { useEffect, useState } from "react";
 
 function SufferPage() {
-  // const [hyperNightmareMode, setHyperNightmareMode] = useState(false);
+  // const [HyperNightmareMode, setHyperNightmareMode] = useState(false);
   const [timerStarted, setTimerStarted] = useState(false);
   const [workout, setWorkout] = useState('');
   const [dDay, setDDay] = useState('');
   const [exp, setExp] = useState(0); // State for experience points
   const [level, setLevel] = useState(1); // State for current level
-  const [maxExp, setMaxExp] =useState(1000); // Maximum experience points required for leveling up
+  const [maxExp, setMaxExp] = useState(1000); // Maximum experience points required for leveling up
 
   // useEffect(() => {
-  //   chrome.storage.local.get('hyperMode', (result) => {
-  //     setHyperNightmareMode(result.hyperMode)
+  //   chrome.storage.local.get('HyperMode', (result) => {
+  //     setHyperNightmareMode(result.HyperMode)
   //   })
   // }, [])
 
@@ -55,9 +55,10 @@ function SufferPage() {
       const dayOfWeek = today.getDay();
       setDDay(Day[dayOfWeek]);
       setWorkout(workoutLogs[dayOfWeek]); // workoutLogs[Math.floor(Math.random() * workoutLogs.length)]
-      chrome.storage.local.get(["level", "exp"], (result) => {
+      chrome.storage.local.get(["level", "exp", "maxExp"], (result) => {
         setExp(result.exp || 0)
         setLevel(result.level || 1)
+        setMaxExp(result.maxExp || 1000)
       })
     }, [])
 
@@ -67,7 +68,7 @@ function SufferPage() {
 
     // const handleTimerEnd = () => {
     //   // console.log("Congratulations you have successfully failed!")
-    //   chrome.storage.local.set({"hyperMode": true})
+    //   chrome.storage.local.set({"HyperMode": true})
     //   alert("Congratulations you have successfully failed! \nHyper Nightmare mode activated😈")
 
     //   chrome.tabs.getCurrent(function(tab) {
@@ -76,11 +77,12 @@ function SufferPage() {
     // }
 
     const handleSafeChange = () => {
-      chrome.storage.local.set({"exp": exp + 100})
+      chrome.storage.local.set({"exp": exp + 100});
       chrome.storage.local.set({"level": level});
+      chrome.storage.local.set({"maxExp": maxExp});
 
       chrome.runtime.sendMessage({ action: "changeSafe", value: true });
-      // chrome.storage.local.set({"hyperMode": false})
+      // chrome.storage.local.set({"HyperMode": false})
       chrome.tabs.getCurrent(function(tab) {
         chrome.tabs.remove(tab.id);
       });
