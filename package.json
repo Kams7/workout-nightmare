@@ -1,8 +1,8 @@
 {
   "name": "workout-nightmare",
   "displayName": "Workout nightmare",
-  "version": "0.0.1",
-  "description": "This a extension which forces you to do intense workout and give nightmares possibly :)",
+  "version": "1.0.2",
+  "description": "Meet your workout demon which forces you into intense workouts and gives nightmares possibly:) So get pumpin’ before online jumpin’.",
   "author": "Ajikaba",
   "scripts": {
     "dev": "plasmo dev",
