@@ -1,8 +1,8 @@
 {
   "name": "workout-nightmare",
   "displayName": "Workout nightmare",
-  "version": "1.0.2",
-  "description": "Meet your workout demon which forces you into intense workouts and gives nightmares possibly:) So get pumpin’ before online jumpin’.",
+  "version": "1.0.3",
+  "description": "Meet your workout demon which forces you into intense workouts and give nightmares all day. So get pumpin’ before online jumpin’.",
   "author": "Ajikaba",
   "scripts": {
     "dev": "plasmo dev",

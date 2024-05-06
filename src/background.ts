@@ -4,7 +4,7 @@ let sufferUrl = chrome.runtime.getURL("tabs/suffer.html")
 function initializeVariables(callback) {
   chrome.storage.local.get(["lastDate", "isSafe"], function (result) {
     const full_today = new Date();
-    full_today.setHours(full_today.getHours() - 4);
+    full_today.setHours(full_today.getHours() - 17);
 
     const today = full_today.toLocaleDateString();
 
